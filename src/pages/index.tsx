@@ -1,7 +1,14 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import ErrorBoundary from "~/components/ErrorBoundary";
 import useDebounce from "~/utils/hooks/useDebounce";
+
+// const ErrorScreen = (props: { error: string }) => {
+//   return (
+//     <div className="absolute top-0 h-full w-full bg-red-200">{props.error}</div>
+//   );
+// };
 
 const Home: NextPage = () => {
   const [userText, setUserText] = useState("");
@@ -15,7 +22,9 @@ const Home: NextPage = () => {
 
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setTimeout(() => {}, 3 * 1000);
-      console.log(debouncedUserText);
+
+      throw new Error("There was an error.");
+
       setIsTyping(false);
     } else {
       setIsTyping(false);
@@ -38,7 +47,9 @@ const Home: NextPage = () => {
           ></textarea>
         </div>
         <div className="flex h-full flex-col gap-4 bg-cyan-800 pl-2">
-          <iframe className="h-1/2 w-full bg-white"></iframe>
+          <div className="relative h-1/2 w-full">
+            <iframe className="h-full w-full bg-white"></iframe>
+          </div>
           <div className="h-1/2 w-full bg-white"></div>
         </div>
       </main>
