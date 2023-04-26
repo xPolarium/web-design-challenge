@@ -1,19 +1,24 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
 import useDebounce from "~/utils/hooks/useDebounce";
 
-// const ErrorScreen = (props: { error: string }) => {
-//   return (
-//     <div className="absolute top-0 h-full w-full bg-red-200">{props.error}</div>
-//   );
-// };
+const ErrorFallback = ({ error }: { error: { message: string } }) => {
+  return (
+    <div className="absolute top-0 h-full w-full bg-red-200">
+      {error.message}
+    </div>
+  );
+};
 
 const Home: NextPage = () => {
   const [userText, setUserText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   const debouncedUserText = useDebounce(userText, 500);
+
+  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     if (debouncedUserText) {
@@ -22,7 +27,7 @@ const Home: NextPage = () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setTimeout(() => {}, 3 * 1000);
 
-      throw new Error("There was an error.");
+      throw new Error("Something went wrong.");
 
       setIsTyping(false);
     } else {
