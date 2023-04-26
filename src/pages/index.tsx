@@ -1,7 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import ErrorBoundary from "~/components/ErrorBoundary";
 import useDebounce from "~/utils/hooks/useDebounce";
 
 // const ErrorScreen = (props: { error: string }) => {
