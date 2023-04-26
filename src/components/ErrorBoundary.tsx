@@ -13,7 +13,10 @@ class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
-  state: ErrorBoundaryState = { hasError: false };
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
   static getDerivedStateFromError(error: any) {
     return { hasError: true };
@@ -26,7 +29,17 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return this.props.fallback;
+      return (
+        <div className="relative h-1/2 w-full bg-white">
+          <h2>Oops, there is an error!</h2>
+          <button
+            type="button"
+            onClick={() => this.setState({ hasError: false })}
+          >
+            Try again?
+          </button>
+        </div>
+      );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return

@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@babel/standalone": "^7.21.4",
     "@prisma/client": "^4.11.0",
     "@tanstack/react-query": "^4.28.0",
     "@trpc/client": "^10.18.0",
@@ -24,6 +25,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/babel__standalone": "^7.1.4",
     "@types/eslint": "^8.21.3",
     "@types/node": "^18.15.5",
     "@types/prettier": "^2.7.2",
