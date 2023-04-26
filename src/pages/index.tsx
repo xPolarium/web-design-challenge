@@ -1,24 +1,15 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
+import ErrorBoundary from "~/components/ErrorBoundary";
 import useDebounce from "~/utils/hooks/useDebounce";
-
-const ErrorFallback = ({ error }: { error: { message: string } }) => {
-  return (
-    <div className="absolute top-0 h-full w-full bg-red-200">
-      {error.message}
-    </div>
-  );
-};
 
 const Home: NextPage = () => {
   const [userText, setUserText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [error, setError] = useState("");
 
   const debouncedUserText = useDebounce(userText, 500);
-
-  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     if (debouncedUserText) {
@@ -26,8 +17,7 @@ const Home: NextPage = () => {
 
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       setTimeout(() => {}, 3 * 1000);
-
-      throw new Error("Something went wrong.");
+      throw new Error("Test");
 
       setIsTyping(false);
     } else {
@@ -53,7 +43,15 @@ const Home: NextPage = () => {
         <div className="flex h-full flex-col gap-4 bg-cyan-800 pl-2">
           <div className="relative h-1/2 w-full">
             <iframe className="h-full w-full bg-white"></iframe>
+            <ErrorBoundary
+              fallback={
+                <div className="h-full w-full bg-red-100">
+                  Something went wrong...
+                </div>
+              }
+            ></ErrorBoundary>
           </div>
+
           <div className="h-1/2 w-full bg-white"></div>
         </div>
       </main>
